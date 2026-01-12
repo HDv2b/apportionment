@@ -1,12 +1,32 @@
+[Home](README.md) | [Change Log](CHANGELOG.md) | [Contribution Guide](CONTRIBUTING.md) | [License (MIT)](LICENSE.md)
+
+[![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
+![NPM Version](https://img.shields.io/npm/v/apportionment)
+![GitHub Sponsors](https://img.shields.io/github/sponsors/hdv2b)
+![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/hdv2b/apportionment)
+![GitHub License](https://img.shields.io/github/license/hdv2b/apportionment)
+![NPM Type Definitions](https://img.shields.io/npm/types/apportionment)
+
 # Apportionment
 
-## TLDR
+Returning users, please be sure to see [change log](CHANGELOG.md) for breaking changes.
 
-Installation: 
+## Installation:
 
-`npm install apportionment`
+```bash 
+npm i apportionment
+```
+```bash 
+yarn add apportionment
+```
+```bash 
+pnpm i apportionment
+```
+```bash 
+bun i apportionment
+```
 
-Example code:
+## Quick-start
 
 ```js
 import {hamilton, webster} from "apportionment";
@@ -16,17 +36,15 @@ const populations = [21878, 9713, 4167, 3252, 1065];
 
 // get apportionment when 44 seats are available, using Hamilton Method
 const result = hamilton(populations, 44);
-console.log(result.apportionment); // => [24, 11, 5, 3, 1], how to distribute the 44 seats among the states (in same order as input)
+console.log(result); // => { exact: [24, 11, 5, 3, 1] }, how to distribute the 44 seats among the states (in same order as input)
                                    // result object does contain more data, see docs for details. 
 
 // with same populations, get apportionment when a seat is removed
-console.log(hamilton(populations, 43).apportionment); // => [24, 10, 4, 4, 1]
+console.log(hamilton(populations, 43)); // => { exact: [24, 10, 4, 4, 1] }
 
 // try Webster Method for the same population and seats
-console.log(webster(populations, 43).apportionment); // => [24, 11, 4, 3, 1]                                                      
+console.log(webster(populations, 43)); // => { exact: [24, 11, 4, 3, 1] }                                                      
 ```
-
-[Version 1](https://www.npmjs.com/package/apportionment/v/1.0.9) has a simpler output format which contains just the result. Version 2 (this, current) has a more verbose output which includes the working-out steps, primarily to help with educational applications or debugging.
 
 ## Live demo
 Side-by-side comparison of different apportionment methods. Features real-time code snippet generation.
@@ -94,10 +112,10 @@ All functions in this category will output a flat object:
 {
     divisor:               number,   // The standard divisor
     quotients:             number[], // Quotients for each count given
-    preAllocation:         number[], // Minimum guaranteed seats
+    preallocation:         number[], // Minimum guaranteed seats
     remainders:            number[], // Remainders after pre-allocation is subtraced from quotients
-    preAllocationSum:      number,   // Total number of pre-allocated seats
-    preAllocationLeftOver: number,   // Total number of seats remaining after pre-allocation
+    preallocationSum:      number,   // Total number of pre-allocated seats
+    preallocationLeftOver: number,   // Total number of seats remaining after pre-allocation
     leftOverAllocation:    number[], // Allocation of remaining seats
     apportionment:         number[], // Final result of allocation
 }
@@ -124,14 +142,14 @@ console.log(result);
     quotients: [4.30903888234304, 5.579868708971554, 1.6748022218481737, 8.436290186837233],
 
     // Each of the quotients rounded down to give a guaranteed pre-allocation amount of seats:
-    preAllocation: [4, 5, 1, 8],
+    preallocation: [4, 5, 1, 8],
 
     // What's left after rounding down:
     remainders: [0.30903888234303967, 0.5798687089715537, 0.6748022218481737, 0.4362901868372333],
 
     // The total number of seats pre-allocated, and the number of seats left over:
-    preAllocationSum: 18,
-    preAllocationLeftOver: 2,
+    preallocationSum: 18,
+    preallocationLeftOver: 2,
 
     // How to allocate the remaining seats (distribute 1-by-1 in order of highest remainder first):
     leftOverAllocation: [0, 1, 1, 0],
@@ -162,7 +180,7 @@ Note again that each of the functions in this category will return the same obje
 ```typescript
 {
     standardDivisor:     number,    // standard divisor
-    preAllocation:       number,    // initial apportionment as a result of using the standard divisor
+    preallocation:       number,    // initial apportionment as a result of using the standard divisor
     exact: {
         modifiedDivisor: number,    // first divisor found which yields a workable result (other divisors are possible)
         quotients:       number[],  // quotients produced by the working modified divisor
@@ -176,7 +194,7 @@ Note again that each of the functions in this category will return the same obje
 ```typescript
 {
     standardDivisor:     number,    // standard divisor
-    preAllocation:       number,    // initial apportionment as a result of using the standard divisor
+    preallocation:       number,    // initial apportionment as a result of using the standard divisor
     low: {
         modifiedDivisor: number,    // divisor which yields the closest possible apportionment without overshooting what is available
         quotients:       number[],  // quotients produced by the working modified divisor
@@ -213,7 +231,7 @@ console.log(result);
     standardDivisor: 594.1,
     
     // Allocation when using the standard divisor (4 + 5 + 1 + 8) = 18 (too low, so the divisor will be lowered until a workable answer is found)
-    preAllocation: [ 4, 5, 1, 8 ],
+    preallocation: [ 4, 5, 1, 8 ],
 
     // "exact" means a divisor was found which gives a workable result
     exact: {
@@ -250,7 +268,7 @@ console.log(result);
     standardDivisor: 1300,
 
     // Allocation when using the standard divisor (4 + 3 + 1 + 0) = 8 (too low, so the divisor will be lowered until a workable answer is found)
-    preAllocation: [ 4, 3, 1, 0 ],
+    preallocation: [ 4, 3, 1, 0 ],
 
     // "low" means the sum of apportioned seats is lower than what is available (use this result if you're happy to have unused seats)
     low: {
@@ -304,12 +322,12 @@ const populations = [21878, 9713, 4167, 3252, 1065];
 const seats = 44;
 
 // get apportionment when 44 seats are available
-const apportionment = hamilton(populations, seats);
-console.log(apportionment); 
+const apportionment = hamiltonVerbose(populations, seats);
+console.log(apportionment);
 // output: [24, 11, 5, 3, 1]
 
 // current (2.0.0)
-const apportionment2 = hamilton(populations, seats);
+const apportionment2 = hamiltonVerbose(populations, seats);
 console.log(apportionment2);
 /* output: 
 {
@@ -321,7 +339,7 @@ console.log(apportionment2);
     3.5705053025577045,
     1.1693075483468498
   ],
-  preAllocation: [ 24, 10, 4, 3, 1 ],
+  preallocation: [ 24, 10, 4, 3, 1 ],
   remainders: [
     0.020761072988147333,
     0.6643044291952602,
@@ -329,12 +347,10 @@ console.log(apportionment2);
     0.5705053025577045,
     0.1693075483468498
   ],
-  preAllocationSum: 42,
-  preAllocationLeftOver: 2,
+  preallocationSum: 42,
+  preallocationLeftOver: 2,
   leftOverAllocation: [ 0, 1, 1, 0, 0 ],
   allocation: [ 24, 11, 5, 3, 1 ]
 }
 */
 ```
-
-If you don't need the calculation steps for your project and prefer the simpler output, feel free to use [v1](https://www.npmjs.com/package/apportionment/v/1.0.9).
