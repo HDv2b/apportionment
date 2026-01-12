@@ -1,67 +1,63 @@
 {
-  "name": "apportionment",
-  "version": "2.0.3",
-  "description": "Collection of apportionment methods.",
-  "types": "./dist/index.d.ts",
-  "keywords": [
-    "apportionment",
-    "math",
-    "fair distribution",
-    "remainder",
-    "voting",
-    "proportional representation",
-    "Hamilton",
-    "Vinton",
-    "Hare-Niemeyer",
-    "Largest Remainder",
-    "Jefferson",
-    "D'Hondt",
-    "Adams",
-    "Webster",
-    "Huntington-Hill"
-  ],
-  "main": "./dist/index.js",
-  "module": "./index.js",
-  "scripts": {
-    "test": "tape -r ts-node/register test/*.test.ts",
-    "coverage": "nyc yarn test",
-    "report": "nyc report --reporter=html",
-    "lint": "eslint src --ext .ts",
-    "prepack": "tsc"
-  },
-  "nyc": {
-    "extension": [
-      ".ts"
-    ],
-    "exclude": [
-      "**/*.test.ts"
-    ]
-  },
-  "author": {
-    "name": "Hussein Duvigneau",
-    "email": "hussein@notmybase.com",
-    "url": "https://notmybase.com"
-  },
-  "bugs": "https://github.com/ElGoorf/apportionment/issues",
-  "homepage": "https://github.com/ElGoorf/apportionment",
-  "repository": "github:ElGoorf/apportionment",
-  "license": "MIT",
-  "devDependencies": {
-    "@babel/cli": "^7.17.6",
-    "@babel/core": "^7.17.9",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-typescript": "^7.16.7",
-    "@types/tape": "^4.13.2",
-    "@typescript-eslint/eslint-plugin": "^5.18.0",
-    "@typescript-eslint/parser": "^5.18.0",
-    "eslint": "^8.13.0",
-    "nyc": "^15.1.0",
-    "prettier": "2.6.2",
-    "tape": "^5.5.3",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.3"
-  },
-  "files": [
-    "dist/**/*"
-  ]
+	"name": "apportionment",
+	"version": "3.0.0",
+	"description": "Collection of apportionment methods.",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/HDv2b/apportionment"
+	},
+	"type": "module",
+	"types": "./dist/index.d.ts",
+	"keywords": [
+		"apportionment",
+		"math",
+		"fair distribution",
+		"remainder",
+		"voting",
+		"proportional representation",
+		"Hamilton",
+		"Vinton",
+		"Hare-Niemeyer",
+		"Largest Remainder",
+		"Jefferson",
+		"D'Hondt",
+		"Adams",
+		"Webster",
+		"Huntington-Hill"
+	],
+	"main": "./dist/index.js",
+	"module": "./index.js",
+	"scripts": {
+		"test": "vitest",
+		"coverage": "vitest run --coverage",
+		"lint": "npx @biomejs/biome check --write",
+		"prepack": "npx tsgo",
+		"bench:single": "cross-env NODE_OPTIONS=--expose-gc npx vitest bench test/index.bench.ts --maxWorkers=1 --run"
+	},
+	"nyc": {
+		"extension": [
+			".ts"
+		],
+		"exclude": [
+			"**/*.test.ts"
+		]
+	},
+	"author": {
+		"name": "Hussein Duvigneau",
+		"email": "hussein@notmybase.com",
+		"url": "https://notmybase.com"
+	},
+	"bugs": "https://github.com/HDv2b/apportionment/issues",
+	"homepage": "https://github.com/HDv2b/apportionment",
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.13",
+		"@typescript/native-preview": "^7.0.0-dev.20260201.1",
+		"@vitest/coverage-v8": "^4.0.18",
+		"cross-env": "^10.1.0",
+		"vitest": "^4.0.18"
+	},
+	"files": [
+		"dist/**/*"
+	]
 }
